@@ -46,13 +46,14 @@ for f in argv[2:]:
         year_len = 2
     else:
         year_len = 4
+    print(year_short)
     iso_date = "-".join(
         (
-            f[year_pos : year_pos + year_len],
+            ("20" if year_short else "") + f[year_pos : year_pos + year_len],
             f[month_pos : month_pos + 2],
             f[day_pos : day_pos + 2],
         )
     )
     new_name = iso_date + "_" + f[name_pos:]
     print(new_name)
-    rename(f, new_name)
+    # rename(f, new_name)

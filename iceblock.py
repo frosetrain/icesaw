@@ -109,14 +109,7 @@ def make_block(new: str, block_id: int) -> dict:
         "files": [],
     }
     for file in track(listdir(new)):
-        if (
-            int(file[0:4])
-            and int(file[5:7])
-            and int(file[8:10])
-            and file[4] == "-"
-            and file[7] == "-"
-            and file[10] == "_"
-        ):
+        if int(file[0:4]) and int(file[5:7]) and int(file[8:10]) and file[4] == "-" and file[7] == "-" and file[10] == "_":
             md5sum = md5()
             with open(new + file, "rb") as f:
                 data = True
