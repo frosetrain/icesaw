@@ -84,22 +84,26 @@ def check_dir(d: str, delete=False):
             if g is not None:
                 print("collision", g, filename)
                 if delete:
-                    remove(filename)
+                    remove(d + filename)
             else:
                 hashes[md5sum] = filename
 
 
-def make_block(new: str):
+def make_block(new: str, block_id: int) -> dict:
     """Create an iceblock dict.
 
     Args:
         new (str): Path to the new iceblock
+        block_id (int): The block id
+
+    Returns:
+        dict: The iceblock dict
 
     Raises:
         DateFormatError: A file does not conform to the ISO 8601 date format.
     """
     block = {
-        "blockId": 1,
+        "blockId": 2,
         "date": date.today().isoformat(),
         "count": len(listdir(new)),
         "files": [],
@@ -128,6 +132,7 @@ def make_block(new: str):
         else:
             print(file)
             raise DateFormatError
+    return block
 
 
 def dump_block(block: dict, out_file: str = None) -> None:
@@ -144,13 +149,13 @@ def dump_block(block: dict, out_file: str = None) -> None:
         print(dumps(block, indent=4))
 
 
-# ARCTIC = "/home/zixi/arctic/"
-GO_IN = "/home/zixi/b2/"
-HAHA = "/home/zixi/Downloads/photos/"
+GO_IN = "/home/fros/Downloads/iCloud/"
 
-load_json("/run/media/zixi/.arc0/b0.json")
-load_json("/run/media/zixi/.arc0/b1.json")
+load_json("/run/media/fros/.arc0/b0.json")
+load_json("/run/media/fros/.arc0/b1.json")
+load_json("/run/media/fros/.arc0/b2.json")
 hash_dir(GO_IN, False, GO_IN[0:-1] + ".md5sums")
-hash_dir(HAHA, False, HAHA[0:-1]+".md5sums")
-check_dir(GO_IN)
-check_dir(HAHA)
+check_dir(GO_IN, delete=True)
+
+# b2 = make_block(GO_IN, 2)
+# dump_block(b2, "b2.json")
